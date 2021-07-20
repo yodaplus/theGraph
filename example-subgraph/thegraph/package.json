@@ -1,0 +1,16 @@
+{
+  "name": "erc721",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ hansrajrami/erc721",
+    "create-local": "graph create --node http://localhost:8020/ hansrajrami/erc721",
+    "remove-local": "graph remove --node http://localhost:8020/ hansrajrami/erc721",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hansrajrami/erc721"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.20.0",
+    "@graphprotocol/graph-ts": "0.20.0"
+  }
+}

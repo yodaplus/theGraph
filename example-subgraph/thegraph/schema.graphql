@@ -1,0 +1,26 @@
+type NFT @entity {
+  id: ID!
+  tokenID: BigInt!
+  owner: Bytes!
+  tokenURI: String!
+}
+
+type Account @entity {
+  id: ID!
+  address: Bytes!
+  balance: BigInt!
+}
+
+type ApprovalTransaction @entity {
+  id: ID!
+  owner: Bytes!
+  approvedTo: Bytes!
+  tokenID: BigInt!
+}
+
+type TransferTransaction @entity {
+  id: ID!
+  from: Bytes!
+  to: Bytes!
+  tokenID: BigInt!
+}

@@ -1,0 +1,25 @@
+{
+  "name": "ERC721",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flat": "hardhat flatten > full/ERC721.sol",
+    "graph-init": "graph init --from-contract 0xf14dfd4388b92a9b3b2eac13835e20da38abd559 --network ganache:http://127.0.0.1:8545 --abi abi.json hansrajrami/erc721 thegraph"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.2.0",
+    "hardhat": "^2.3.0"
+  },
+  "dependencies": {
+    "openzeppelin-solidity": "2.0.1"
+  }
+}
