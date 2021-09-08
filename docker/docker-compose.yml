@@ -1,7 +1,7 @@
 version: '3'
 services:
   graph-node:
-    image: xinfin-graph-node:latest
+    image: solulab/xinfin-graph-node:v1
     ports:
       - '8000:8000'
       - '8001:8001'
