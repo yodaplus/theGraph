@@ -1,0 +1,16 @@
+{
+  "name": "json-rpc-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.1",
+    "node-fetch": "^2.6.6",
+    "ssl-root-cas": "^1.3.1"
+  }
+}

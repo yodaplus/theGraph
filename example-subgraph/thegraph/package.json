@@ -4,10 +4,12 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ hansrajrami/erc721",
     "create-local": "graph create --node http://localhost:8020/ hansrajrami/erc721",
     "remove-local": "graph remove --node http://localhost:8020/ hansrajrami/erc721",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hansrajrami/erc721"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hansrajrami/erc721",
+    "create-remote": "graph create --node https://graph-node.yodaplus.net:8020/ hansrajrami/erc721",
+    "remove-remote": "graph remove --node https://graph-node.yodaplus.net:8020/ hansrajrami/erc721",
+    "deploy-remote": "graph deploy --node https://graph-node.yodaplus.net:8020/ --ipfs https://graph-node.yodaplus.net:5001 hansrajrami/erc721"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.20.0",

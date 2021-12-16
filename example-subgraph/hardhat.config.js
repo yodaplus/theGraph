@@ -1,5 +1,17 @@
 require("@nomiclabs/hardhat-waffle");
 
+require("dotenv").config();
+
+const { MNEMONIC } = process.env;
+const DEFAULT_MNEMONIC =
+  "juice whisper void palm tackle film float able plunge invest focus flee";
+
+const sharedNetworkConfig = {
+  accounts: {
+    mnemonic: MNEMONIC ?? DEFAULT_MNEMONIC,
+  },
+};
+
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -9,14 +21,18 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
+        runs: 200,
+      },
+    },
   },
   networks: {
-    ganache: {
-      url: 'http://127.0.0.1:8545',
-      accounts: ['0xea77b041d03462af821ed12985c07f9e214a2020356b72d5fb10c4308d42e45a']
-    }
-  }
+    mainnet: {
+      ...sharedNetworkConfig,
+      url: `https://rpc.xinfin.yodaplus.net`,
+    },
+    apothem: {
+      ...sharedNetworkConfig,
+      url: "https://rpc-apothem.xinfin.yodaplus.net",
+    },
+  },
 };

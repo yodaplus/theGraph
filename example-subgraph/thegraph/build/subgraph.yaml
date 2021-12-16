@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Contract
-    network: mainnet
+    network: xinfin-mainnet
     source:
-      address: 170b78b7d1e21400c0785bbe28d943fbbef2ca03
+      address: "0x541d5A6a2014242f9454C6b473CAce5754b37515"
       abi: Contract
-      startBlock: 21168105
+      startBlock: 38904982
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

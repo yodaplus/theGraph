@@ -1,38 +1,128 @@
-version: '3'
+version: "3.5"
+
+volumes:
+  postgres-data:
+  ipfs-data:
+
 services:
+  proxy:
+    image: eur00t/xinfin-proxy-graph-node
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1Gb
+    ports:
+      - target: 8083
+        x-aws-protocol: http
+    environment:
+      DEBUG: "false"
+      URL: "https://xdcrpc.blocksscan.io"
+    command: npm start
+
   graph-node:
     image: solulab/xinfin-graph-node:v1
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 2Gb
     ports:
-      - '8000:8000'
-      - '8001:8001'
-      - '8020:8020'
-      - '8030:8030'
-      - '8040:8040'
+      - target: 8000
+        x-aws-protocol: http
+      - target: 8020
+        x-aws-protocol: http
+      - target: 8030
+        x-aws-protocol: http
     depends_on:
       - ipfs
       - postgres
     environment:
       postgres_host: postgres
       postgres_user: graph-node
-      postgres_pass: let-me-in
+      postgres_pass: postgres_pass
       postgres_db: graph-node
-      ipfs: 'ipfs:5001'
-      ethereum: 'mainnet:http://13.233.101.71:8989'
-      RUST_LOG: info
+      ipfs: "ipfs:5001"
+      ethereum: "xinfin-mainnet:http://proxy:8083"
+      GRAPH_LOG: debug
+      ETHEREUM_POLLING_INTERVAL: 5000
+      ETHEREUM_ANCESTOR_COUNT: 4
+      ETHEREUM_REORG_THRESHOLD: 4
   ipfs:
     image: ipfs/go-ipfs:v0.4.23
     ports:
-      - '5001:5001'
+      - target: 5001
+        x-aws-protocol: http
     volumes:
-      - ./data/ipfs:/data/ipfs
+      - ipfs-data:/data/ipfs
   postgres:
     image: postgres
-    ports:
-      - '5432:5432'
     command: ["postgres", "-cshared_preload_libraries=pg_stat_statements"]
     environment:
       POSTGRES_USER: graph-node
-      POSTGRES_PASSWORD: let-me-in
+      POSTGRES_PASSWORD: postgres_pass
       POSTGRES_DB: graph-node
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+
+x-aws-cloudformation:
+  Resources:
+    Ipfs5001Listener:
+      Properties:
+        Certificates:
+          - CertificateArn: "arn:aws:acm:ap-south-1:135135176603:certificate/32900884-56a2-4af6-ab08-60afecc43245"
+        Protocol: HTTPS
+
+    Proxy8083Listener:
+      Properties:
+        Certificates:
+          - CertificateArn: "arn:aws:acm:ap-south-1:135135176603:certificate/32900884-56a2-4af6-ab08-60afecc43245"
+        Protocol: HTTPS
+
+    Graphnode8000Listener:
+      Properties:
+        Certificates:
+          - CertificateArn: "arn:aws:acm:ap-south-1:135135176603:certificate/32900884-56a2-4af6-ab08-60afecc43245"
+        Protocol: HTTPS
+
+    Graphnode8020Listener:
+      Properties:
+        Certificates:
+          - CertificateArn: "arn:aws:acm:ap-south-1:135135176603:certificate/32900884-56a2-4af6-ab08-60afecc43245"
+        Protocol: HTTPS
+
+    Graphnode8030Listener:
+      Properties:
+        Certificates:
+          - CertificateArn: "arn:aws:acm:ap-south-1:135135176603:certificate/32900884-56a2-4af6-ab08-60afecc43245"
+        Protocol: HTTPS
+
+    Ipfs5001TargetGroup:
+      Properties:
+        HealthCheckPath: /
+        Matcher:
+          HttpCode: 200-499
+
+    Proxy8083TargetGroup:
+      Properties:
+        HealthCheckPath: /
+        Matcher:
+          HttpCode: 200-499
+
+    Graphnode8000TargetGroup:
+      Properties:
+        HealthCheckPath: /
+        Matcher:
+          HttpCode: 200-499
+
+    Graphnode8020TargetGroup:
+      Properties:
+        HealthCheckPath: /
+        Matcher:
+          HttpCode: 200-499
+
+    Graphnode8030TargetGroup:
+      Properties:
+        HealthCheckPath: /
+        Matcher:
+          HttpCode: 200-499
